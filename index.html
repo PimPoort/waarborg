@@ -1,51 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Honesty Bar Coffee Guide</title>
-<style>
-  body { font-family: Arial, sans-serif; text-align: center; margin: 0; padding: 0; background: #fafafa; }
-  h1 { background: #3e2723; color: white; margin: 0; padding: 1rem; }
-  #buttons { margin: 2rem 0; }
-  #buttons button { font-size: 1.2rem; margin: 0.5rem; padding: 1rem 2rem; }
-  #video-container { display: none; }
-  video { max-width: 90%; height: auto; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Honesty Bar Coffee Guide</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; margin: 0; padding: 0; background: #fafafa; }
+    h1 { background: #3e2723; color: white; margin: 0; padding: 1rem; }
+    #buttons { margin: 2rem 0; }
+    #buttons img {
+      width: 150px;
+      margin: 0.5rem;
+      cursor: pointer;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      transition: border 0.2s;
+    }
+    #buttons img:hover {
+      border-color: #3e2723;
+    }
+    #video-container { display: none; margin-bottom: 2rem; }
+    video { max-width: 90%; height: auto; }
+    #close-video { margin-top: 1rem; padding: 0.5rem 1rem; font-size: 1rem; }
+  </style>
 </head>
 <body>
-<h1>Select a Coffee</h1>
-<div id="buttons">
-  <button data-video="videos/espresso.mp4">Espresso</button>
-  <button data-video="videos/tea.mp4">Tea</button>
-  <button data-video="videos/capuccino.mp4">Capuccino</button>
-  <button data-video="videos/maricano.mp4">Americano</button>
-</div>
-<div id="video-container">
-  <video id="video-player" controls></video>
-  <br>
-  <button id="close-video">Close</button>
-</div>
-<script>
-const buttons = document.querySelectorAll('#buttons button');
-const videoContainer = document.getElementById('video-container');
-const videoPlayer = document.getElementById('video-player');
-const closeBtn = document.getElementById('close-video');
+  <h1>Select a Coffee</h1>
+  <div id="buttons">
+    <img src="images/espresso.png" alt="Espresso" data-video="videos/espresso.mp4">
+    <img src="images/tea.png" alt="Tea" data-video="videos/tea.mp4">
+    <img src="images/cappuccino.png" alt="Cappuccino" data-video="videos/cappuccino.mp4">
+    <img src="images/americano.png" alt="Americano" data-video="videos/americano.mp4">
+  </div>
+  <div id="video-container">
+    <video id="video-player" controls></video>
+    <br>
+    <button id="close-video">Close</button>
+  </div>
+  <script>
+    const items = document.querySelectorAll('#buttons img');
+    const videoContainer = document.getElementById('video-container');
+    const videoPlayer = document.getElementById('video-player');
+    const closeBtn = document.getElementById('close-video');
 
-buttons.forEach(btn => {
-  btn.addEventListener('click', () => {
-    const videoSrc = btn.getAttribute('data-video');
-    videoPlayer.src = videoSrc;
-    videoContainer.style.display = 'block';
-    videoPlayer.play();
-  });
-});
+    items.forEach(item => {
+      item.addEventListener('click', () => {
+        const videoSrc = item.getAttribute('data-video');
+        videoPlayer.src = videoSrc;
+        videoContainer.style.display = 'block';
+        videoPlayer.play();
+      });
+    });
 
-closeBtn.addEventListener('click', () => {
-  videoPlayer.pause();
-  videoPlayer.removeAttribute('src');
-  videoContainer.style.display = 'none';
-});
-</script>
+    closeBtn.addEventListener('click', () => {
+      videoPlayer.pause();
+      videoPlayer.removeAttribute('src');
+      videoContainer.style.display = 'none';
+    });
+  </script>
 </body>
 </html>
