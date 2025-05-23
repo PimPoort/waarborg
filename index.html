@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Honesty Bar Coffee Guide</title>
+<style>
+  body { font-family: Arial, sans-serif; text-align: center; margin: 0; padding: 0; background: #fafafa; }
+  h1 { background: #3e2723; color: white; margin: 0; padding: 1rem; }
+  #buttons { margin: 2rem 0; }
+  #buttons button { font-size: 1.2rem; margin: 0.5rem; padding: 1rem 2rem; }
+  #video-container { display: none; }
+  video { max-width: 90%; height: auto; }
+</style>
+</head>
+<body>
+<h1>Select a Coffee</h1>
+<div id="buttons">
+  <button data-video="videos/espresso.mp4">Espresso</button>
+  <button data-video="videos/cappuccino.mp4">Cappuccino</button>
+  <button data-video="videos/latte.mp4">Latte</button>
+</div>
+<div id="video-container">
+  <video id="video-player" controls></video>
+  <br>
+  <button id="close-video">Close</button>
+</div>
+<script>
+const buttons = document.querySelectorAll('#buttons button');
+const videoContainer = document.getElementById('video-container');
+const videoPlayer = document.getElementById('video-player');
+const closeBtn = document.getElementById('close-video');
+
+buttons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const videoSrc = btn.getAttribute('data-video');
+    videoPlayer.src = videoSrc;
+    videoContainer.style.display = 'block';
+    videoPlayer.play();
+  });
+});
+
+closeBtn.addEventListener('click', () => {
+  videoPlayer.pause();
+  videoPlayer.removeAttribute('src');
+  videoContainer.style.display = 'none';
+});
+</script>
+</body>
+</html>
