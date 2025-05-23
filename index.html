@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Honesty Bar Coffee Guide</title>
   <style>
-    body { font-family: Arial, sans-serif; text-align: center; margin: 0; padding: 0; background: #fafafa; }
-    h1 { background: #3e2723; color: white; margin: 0; padding: 1rem; }
-    #buttons { margin: 2rem 0; }
+    body { font-family: Arial, sans-serif; text-align: center; margin: 0; padding: 0; background: #fafafa; overflow: hidden; }
+    h1 { background: #3e2723; color: white; margin: 0; padding: 1rem; z-index: 1; position: relative; }
+    #buttons { margin: 2rem 0; z-index: 1; position: relative; }
     #buttons img {
       width: 150px;
       margin: 0.5rem;
@@ -16,12 +16,36 @@
       border-radius: 8px;
       transition: border 0.2s;
     }
-    #buttons img:hover {
-      border-color: #3e2723;
+    #buttons img:hover { border-color: #3e2723; }
+    #video-container {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #000;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
     }
-    #video-container { display: none; margin-bottom: 2rem; }
-    video { max-width: 90%; height: auto; }
-    #close-video { margin-top: 1rem; padding: 0.5rem 1rem; font-size: 1rem; }
+    #video-container video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    #close-video {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      z-index: 1001;
+      background: rgba(255,255,255,0.8);
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -34,7 +58,6 @@
   </div>
   <div id="video-container">
     <video id="video-player" controls></video>
-    <br>
     <button id="close-video">Close</button>
   </div>
   <script>
@@ -43,20 +66,35 @@
     const videoPlayer = document.getElementById('video-player');
     const closeBtn = document.getElementById('close-video');
 
+    function closeVideo() {
+      videoPlayer.pause();
+      videoPlayer.removeAttribute('src');
+      videoContainer.style.display = 'none';
+    }
+
+    // Play video on image click
     items.forEach(item => {
       item.addEventListener('click', () => {
         const videoSrc = item.getAttribute('data-video');
         videoPlayer.src = videoSrc;
-        videoContainer.style.display = 'block';
+        videoContainer.style.display = 'flex';
         videoPlayer.play();
       });
     });
 
-    closeBtn.addEventListener('click', () => {
-      videoPlayer.pause();
-      videoPlayer.removeAttribute('src');
-      videoContainer.style.display = 'none';
+    // Quit video on any click in the video container
+    videoContainer.addEventListener('click', () => {
+      closeVideo();
     });
+
+    // Prevent the close button click from bubbling to container twice
+    closeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeVideo();
+    });
+
+    // Hide video when it ends
+    videoPlayer.addEventListener('ended', closeVideo);
   </script>
 </body>
 </html>
