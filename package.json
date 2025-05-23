@@ -1,0 +1,19 @@
+{
+  "name": "waarborg",
+  "version": "1.0.0",
+  "description": "This project provides a simple kiosk-style web page for an honesty bar coffee stand. The page displays different types of coffee. When a coffee is selected, a short video demonstrates how to make it.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@capacitor/cli": "^7.2.0",
+    "@capacitor/core": "^7.2.0"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.2.0"
+  }
+}
